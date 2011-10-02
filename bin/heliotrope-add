@@ -8,7 +8,7 @@ require "heliotrope"
 require 'json'
 
 def ask q
-  print "IMAP password (displayed!): "
+  print q
   $stdout.flush
   (gets || abort).chomp
 end
