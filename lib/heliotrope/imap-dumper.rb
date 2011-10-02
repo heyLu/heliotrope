@@ -114,7 +114,7 @@ class IMAPDumper
   def initialize opts
     %w(host port username password state_fn folder ssl).each do |x|
       v = opts[x.to_sym]
-      raise ArgumentError, "need #{x}" unless v
+      raise ArgumentError, "need #{x}" unless opts.has_key? x.to_sym
       instance_variable_set "@#{x}", v
     end
     @msgs = []
@@ -138,7 +138,7 @@ class IMAPDumper
     end
 
     puts "; connecting to #{@host}:#{@port} (ssl: #{!!@ssl})..."
-    @imap = Net::IMAP.new @host, @port, :ssl => @ssl
+    @imap = Net::IMAP.new @host, { :port => @port, :ssl => @ssl }
     puts "; login as #{@username} ..."
     @imap.login @username, @password
 
